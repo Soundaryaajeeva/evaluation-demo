@@ -1,0 +1,35 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in with Angular 8!!</p>
+<h3>All login audit :</h3>
+
+<div>
+    <form [formGroup]="searchForm">
+        <select formControlName="selectedTime" (change)="onOptionSelected()">
+            <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+          </select>&nbsp;Search: <input type="text" formControlName="searchTerm" (keyup)="filterData()">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th (click)="sortKey='_id'; sortData()">ID <span [hidden]="sortKey !== '_id'"><i class="fa fa-fw" [ngClass]="{'fa-sort-asc': sortDirection === 'asc', 'fa-sort-desc': sortDirection === 'desc'}"></i></span></th>
+                <th (click)="sortKey='user'; sortData()">USER <span [hidden]="sortKey !== 'user'"><i class="fa fa-fw" [ngClass]="{'fa-sort-asc': sortDirection === 'asc', 'fa-sort-desc': sortDirection === 'desc'}"></i></span></th>
+                <th (click)="sortKey='loginTime'; sortData()">LOGIN TIME <span [hidden]="sortKey !== 'loginTime'"><i class="fa fa-fw" [ngClass]="{'fa-sort-asc': sortDirection === 'asc', 'fa-sort-desc': sortDirection === 'desc'}"></i></span></th>
+                <th (click)="sortKey='logoutTime'; sortData()">LOGOUT TIME <span [hidden]="sortKey !== 'logoutTime'"><i class="fa fa-fw" [ngClass]="{'fa-sort-asc': sortDirection === 'asc', 'fa-sort-desc': sortDirection === 'desc'}"></i></span></th>
+                <th (click)="sortKey='ip'; sortData()">IP <span [hidden]="sortKey !== 'ip'"><i class="fa fa-fw" [ngClass]="{'fa-sort-asc': sortDirection === 'asc', 'fa-sort-desc': sortDirection === 'desc'}"></i></span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of getPagedData()">
+                <td class="badge badge-secondary">{{ employee._id }}</td>
+                <td class="badge badge-primary">{{ employee.user }}</td>
+                <td>{{ employee.loginTime }}</td>
+                <td>{{ employee.logoutTime }}</td>
+                <td>{{ employee.ip }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button (click)="goToPreviousPage()">Previous</button> Page {{ currentPage }} of {{ maxPage }}
+        <button (click)="goToNextPage()">Next</button>
+    </div>
+</div>
